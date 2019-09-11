@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="freeboard">
+
+	<select id="selectlist" resultType="FreeBoardDto">
+	 SELECT FREE_BOARD_NO, FREE_TITLE, FREE_WRITER, FREE_CONTENT, FREE_REGDATE, FREE_DELFLAG
+	 FROM FREE_BOARD
+	 WHERE
+	 <if test="free_title != null">
+	 	FREE_TITLE  LIKE '%'||#{free_title}||'%' AND
+	 </if>
+	  <if test="free_writer != null">
+	 	FREE_WRITER  LIKE '%'||#{free_writer}||'%' AND
+	 </if>
+	  <if test="free_content != null">
+	 	FREE_CONTENT  LIKE '%'||#{free_content}||'%' AND
+	 </if>
+	 FREE_DELFLAG = 'N'
+	 ORDER BY FREE_BOARD_NO DESC
+	</select>
+	
+	<select id="myboard" parameterType="String" resultType="FreeBoardDto">
+	 SELECT 
+	 FREE_BOARD_NO, 
+	 FREE_TITLE, 
+	 FREE_WRITER, 
+	 FREE_CONTENT, 
+	 FREE_REGDATE, 
+	 FREE_DELFLAG
+	 FROM FREE_BOARD
+	 WHERE FREE_WRITER = #{writer} AND FREE_DELFLAG = 'N'
+	 ORDER BY FREE_BOARD_NO DESC
+	</select>
+	<select id="selectone" parameterType="int" resultType="FreeBoardDto">
+	 SELECT 
+	 FREE_BOARD_NO, 
+	 FREE_TITLE, 
+	 FREE_WRITER, 
+	 FREE_CONTENT, 
+	 FREE_REGDATE, 
+	 FREE_DELFLAG
+	 FROM FREE_BOARD
+	 WHERE FREE_BOARD_NO = #{free_board_no}
+	</select>
+	
+	<insert id="insert" parameterType="FreeBoardDto">
+	 INSERT INTO FREE_BOARD
+	 VALUES(
+	 FREE_BOARD_SEQ.NEXTVAL, 
+	 #{free_title}, 
+	 #{free_writer}, 
+	 #{free_content}, 
+	 'N', 
+	 SYSDATE)
+	</insert>
+	
+	<update id="update" parameterType="FreeBoardDto">
+	 UPDATE FREE_BOARD
+	 SET FREE_TITLE = #{free_title}, FREE_CONTENT = #{free_content}
+	 WHERE FREE_BOARD_NO = #{free_board_no}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+	 DELETE FROM FREE_BOARD
+	 WHERE FREE_BOARD_NO = #{free_board_no}
+	</delete>
+
+</mapper>

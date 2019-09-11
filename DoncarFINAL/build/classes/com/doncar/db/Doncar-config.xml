@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<properties resource="com/doncar/db/db.properties"></properties>
+
+	<typeAliases>
+		<typeAlias type="com.doncar.dto.MemberDto" alias="MemberDto" />
+		<typeAlias type="com.doncar.dto.ChatDto" alias="ChatDto"/>
+		<typeAlias type="com.doncar.dto.RentBoardDto" alias="RentBoardDto"/>
+		<typeAlias type="com.doncar.dto.RentAccDto" alias="RentAccDto"/>
+		<typeAlias type="com.doncar.dto.FreeBoardDto" alias="FreeBoardDto"/>
+		<typeAlias type="com.doncar.dto.NoticeBoardDto" alias="NoticeBoardDto"/>
+		<typeAlias type="com.doncar.dto.CommentDto" alias="CommentDto"/>
+		<typeAlias type="com.doncar.dto.CarBoardDto" alias="CarBoardDto"/>
+		<typeAlias type="com.doncar.dto.CarAccDto" alias="CarAccDto"/>
+		<typeAlias type="com.doncar.dto.ChatMessageDto" alias="ChatMessageDto"/>
+	</typeAliases>
+	
+
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/doncar/mapper/Member-mapper.xml" />
+		<mapper resource="com/doncar/mapper/Chat-mapper.xml" />
+		<mapper resource="com/doncar/mapper/RentBoard-mapper.xml" />
+		<mapper resource="com/doncar/mapper/RentAcc-mapper.xml" />
+		<mapper resource="com/doncar/mapper/FreeBoard-mapper.xml" />
+		<mapper resource="com/doncar/mapper/NoticeBoard-mapper.xml" />
+		<mapper resource="com/doncar/mapper/Comment-mapper.xml" />
+		<mapper resource="com/doncar/mapper/CarBoard-mapper.xml" />
+		<mapper resource="com/doncar/mapper/CarAcc-mapper.xml" />
+		<mapper resource="com/doncar/mapper/ChatMessage-mapper.xml"/>
+	</mappers>
+</configuration>

@@ -1,0 +1,188 @@
+[
+	{
+		"RENT_COMPANY": "KIA",
+		"RENT_NAME": "MORNING",
+		"RENT_SIZE": "경차",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "CHEVROLET",
+		"RENT_NAME": "SPARK",
+		"RENT_SIZE": "경차",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "KIA",
+		"RENT_NAME": "RAY",
+		"RENT_SIZE": "경차",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "SSANGYONG",
+		"RENT_NAME": "TIVOLI",
+		"RENT_SIZE": "경차",
+		"RENT_FUEL": "휘발유"
+	},
+	
+	
+	
+	
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "ACCENT",
+		"RENT_SIZE": "소형",
+		"RENT_FUEL": "휘발유"
+	},
+	
+	
+	
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "IONIQ",
+		"RENT_SIZE": "준중형",
+		"RENT_FUEL": "하이브리드"
+	},
+	{
+		"RENT_COMPANY": "SAMSUNG",
+		"RENT_NAME": "SM3",
+		"RENT_SIZE": "준중형",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "KIA",
+		"RENT_NAME": "K3",
+		"RENT_SIZE": "준중형",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "AVANTE",
+		"RENT_SIZE": "준중형",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "i30",
+		"RENT_SIZE": "준중형",
+		"RENT_FUEL": "휘발유"
+	},
+	
+	
+	
+	
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "SONATA",
+		"RENT_SIZE": "중형",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "KIA",
+		"RENT_NAME": "K5",
+		"RENT_SIZE": "중형",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "SAMSUNG",
+		"RENT_NAME": "SM5",
+		"RENT_SIZE": "중형",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "CHEVROLET",
+		"RENT_NAME": "MALIBU",
+		"RENT_SIZE": "중형",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "G70",
+		"RENT_SIZE": "중형",
+		"RENT_FUEL": "휘발유"
+	},
+	
+	
+	
+	
+	
+	
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "GRANDEUR",
+		"RENT_SIZE": "준대형",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "G80",
+		"RENT_SIZE": "준대형",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "KIA",
+		"RENT_NAME": "K7",
+		"RENT_SIZE": "준대형",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "SAMSUNG",
+		"RENT_NAME": "SM7",
+		"RENT_SIZE": "준대형",
+		"RENT_FUEL": "휘발유"
+	},
+	
+	
+	
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "G90",
+		"RENT_SIZE": "대형",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "KIA",
+		"RENT_NAME": "K9",
+		"RENT_SIZE": "대형",
+		"RENT_FUEL": "휘발유"
+	},
+	
+	
+	
+	
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "SANTAFE",
+		"RENT_SIZE": "SUV",
+		"RENT_FUEL": "경유"
+	},
+	{
+		"RENT_COMPANY": "KIA",
+		"RENT_NAME": "SORENTO",
+		"RENT_SIZE": "SUV",
+		"RENT_FUEL": "경유"
+	},
+	{
+		"RENT_COMPANY": "SAMSUNG",
+		"RENT_NAME": "QM6",
+		"RENT_SIZE": "SUV",
+		"RENT_FUEL": "경유"
+	},
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "KONA",
+		"RENT_SIZE": "SUV",
+		"RENT_FUEL": "휘발유"
+	},
+	{
+		"RENT_COMPANY": "HYUNDAI",
+		"RENT_NAME": "TUCSON",
+		"RENT_SIZE": "SUV",
+		"RENT_FUEL": "경유"
+	},
+	{
+		"RENT_COMPANY": "KIA",
+		"RENT_NAME": "SPORTAGE",
+		"RENT_SIZE": "SUV",
+		"RENT_FUEL": "경유"
+	}
+]

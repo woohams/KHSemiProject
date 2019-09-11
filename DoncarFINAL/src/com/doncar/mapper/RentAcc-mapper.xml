@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="rentacc">
+	<select id="rentacc_selectlist" resultType="RentAccDto">
+		SELECT RENTACC_NO, RENT_BOARD_NO, RENTACC_PROCESS, RENTACC_START_DATE, RENTACC_END_DATE, RENTACC_ACC, RENTACC_COMMENT, RENTACC_NICKNAME
+		FROM RENT_ACC ORDER BY RENTACC_NO DESC
+	</select>
+		<select id="myacclist" resultType="RentAccDto">
+		SELECT RENTACC_NO, RENT_BOARD_NO, RENTACC_PROCESS, RENTACC_START_DATE, RENTACC_END_DATE, RENTACC_ACC, RENTACC_COMMENT, RENTACC_NICKNAME
+		FROM RENT_ACC
+		WHERE RENT_BOARD_NO IN (SELECT RENT_BOARD_NO FROM RENT_BOARD WHERE RENT_WRITER = #{writer})
+		ORDER BY RENTACC_NO DESC
+	</select>
+	<select id="rentacc_writer" parameterType="String" resultType="RentAccDto">
+		SELECT RENTACC_NO, RENT_BOARD_NO, RENTACC_PROCESS, RENTACC_START_DATE, RENTACC_END_DATE, RENTACC_ACC, RENTACC_COMMENT, RENTACC_NICKNAME
+		FROM RENT_ACC
+		WHERE RENTACC_NICKNAME = #{writer}
+		ORDER BY RENTACC_NO DESC
+	</select>
+	
+	<select id="rentacc_selectone" resultType="RentAccDto" parameterType="int">
+		SELECT RENTACC_NO, RENT_BOARD_NO, RENTACC_PROCESS, RENTACC_START_DATE, RENTACC_END_DATE, RENTACC_ACC ,RENTACC_COMMENT, RENTACC_NICKNAME
+		FROM RENT_ACC
+		WHERE RENTACC_NO = #{rentacc_no}
+	</select>
+	
+	<insert id="rentacc_insert" parameterType="RentAccDto">
+		INSERT INTO RENT_ACC VALUES(RENT_ACC_SEQ.NEXTVAL,#{rent_board_no},'대기',#{rentacc_start_date},#{rentacc_end_date},'N',#{rentacc_comment},#{rentacc_nickname}) 
+	</insert>
+	
+	<update id="updateacc" parameterType="RentAccDto">
+		UPDATE RENT_ACC SET
+		RENTACC_ACC = #{rentacc_acc},
+		RENTACC_PROCESS = #{rentacc_process}
+		WHERE RENTACC_NO = #{rentacc_no}
+		
+	</update>
+	<delete id="rentacc_delete" parameterType="int">
+		DELETE FROM RENT_ACC
+		WHERE RENTACC_NO = #{rentacc_no}
+	</delete>
+	
+</mapper>

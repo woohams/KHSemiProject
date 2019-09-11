@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="rentboard">
+
+	<select id="rentboard_selectlist" resultType="RentBoardDto" >
+		SELECT RENT_BOARD_NO, RENT_PROCESS, RENT_TITLE, RENT_WRITER, RENT_COMPANY, RENT_SIZE, RENT_FUEL, RENT_PRICE, RENT_LOCATION, RENT_REGDATE, RENT_IMG, RENT_CARNAME , RENT_DELFLAG ,RENT_CONTENT
+		FROM RENT_BOARD 
+		WHERE
+		<if test="rent_carname != null and rent_carname.equals(' ')">
+			RENT_CARNAME = #{rent_carname} AND
+		</if>
+		<if test="rent_size != null and rent_size.equals(' ')">
+			RENT_SIZE = #{rent_size} AND
+		</if>
+		<if test="rent_company != null and rent_company != ''">
+			RENT_COMPANY = #{rent_company} AND
+		</if>
+		<if test="rent_fuel != null and rent_fuel != ''">
+			RENT_FUEL = #{rent_fuel} AND
+		</if>
+		<if test="rent_location != null and rent_location.equals(' ')">
+			RENT_FUEL = #{rent_location} AND
+		</if>
+		<if test="rent_title != null">
+			RENT_TITLE LIKE '%'||#{rent_title}||'%' AND 
+		</if>
+		<if test="rent_writer != null">
+			RENT_WRITER LIKE '%'||#{rent_writer}||'%' AND 
+		</if>
+		<if test="rent_content != null">
+			RENT_CONTENT LIKE '%'||#{rent_content}||'%' AND 
+		</if>
+		RENT_DELFLAG = 'N'
+		ORDER BY RENT_PROCESS, RENT_BOARD_NO DESC
+	</select>
+	
+		<select id="rentboard_myboard" parameterType="String" resultType="RentBoardDto" >
+		SELECT RENT_BOARD_NO, RENT_PROCESS, RENT_TITLE, RENT_WRITER, RENT_COMPANY, RENT_SIZE, RENT_FUEL, RENT_PRICE, RENT_LOCATION, RENT_REGDATE, RENT_IMG, RENT_CARNAME , RENT_DELFLAG ,RENT_CONTENT
+		FROM RENT_BOARD 
+		WHERE RENT_WRITER = #{writer} AND RENT_DELFLAG = 'N'
+		ORDER BY RENT_BOARD_NO DESC
+		</select>
+	
+	<select id="rentboard_selectone" resultType="RentBoardDto" parameterType="int" >
+		SELECT * FROM RENT_BOARD WHERE  RENT_BOARD_NO = #{rent_board_no}
+	</select>
+	
+	<insert id="rentboard_insert" parameterType="RentBoardDto">
+		INSERT INTO RENT_BOARD (RENT_BOARD_NO,RENT_PROCESS,RENT_TITLE,RENT_WRITER,RENT_COMPANY,RENT_SIZE,RENT_FUEL,RENT_PRICE,RENT_LOCATION,RENT_IMG,RENT_CARNAME,RENT_REGDATE,RENT_DELFLAG ,RENT_CONTENT, RENT_X_POINT, RENT_Y_POINT, RENT_CARNO)
+		VALUES(RENT_BOARD_SEQ.NEXTVAL,#{rent_process},#{rent_title},#{rent_writer},#{rent_company},#{rent_size},#{rent_fuel},#{rent_price},#{rent_location},#{rent_img},#{rent_carname},SYSDATE,'N',#{rent_content},#{rent_x_point},#{rent_y_point},#{rent_carno})	
+	</insert>
+	
+	<update id="rentboard_update" parameterType="RentBoardDto">
+		UPDATE RENT_BOARD SET RENT_TITLE = #{rent_title}, RENT_COMPANY = #{rent_company}, RENT_SIZE = #{rent_size}, RENT_FUEL = #{rent_fuel}, RENT_PRICE = #{rent_price}, RENT_LOCATION = #{rent_location}, RENT_IMG = #{rent_img}, RENT_CARNAME = #{rent_carname}, RENT_CONTENT = #{rent_content ,jdbcType=NVARCHAR}
+		WHERE RENT_BOARD_NO = #{rent_board_no} 
+	</update>
+	
+	<update id="rentboard_delete" parameterType="RentBoardDto" >
+		UPDATE RENT_BOARD SET RENT_DELFLAG='Y' 
+		WHERE RENT_BOARD_NO = #{rent_board_no}
+	</update>
+	<select id="rentboard_search" parameterType="String">
+		SELECT RENT_BOARD_NO, RENT_PROCESS, RENT_TITLE, RENT_WRITER, RENT_COMPANY, RENT_SIZE, RENT_FUEL, RENT_PRICE, RENT_LOCATION, RENT_REGDATE, RENT_IMG, RENT_CARNAME , RENT_DELFLAG ,RENT_CONTENT
+		FROM RENT_BOARD 
+		WHERE RENT_WRITER = #{writer}
+	</select>
+</mapper>

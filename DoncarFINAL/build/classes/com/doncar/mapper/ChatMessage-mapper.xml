@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="chatmsg">
+  
+  <select id="selectlist" parameterType="int" resultType="ChatMessageDto">
+  	SELECT CHAT_NO, SENDER, RECEIVER, CONTENT, REGDATE FROM CHAT_MESSAGE
+  	WHERE CHAT_NO = #{chat_no}
+  	ORDER BY REGDATE ASC
+  </select>
+  
+  <insert id="insert" parameterType="ChatMessageDto">
+  	INSERT INTO CHAT_MESSAGE VALUES(
+  	CHAT_MESSAGE_SEQ.NEXTVAL,
+  	#{chat_no},
+  	#{sender},
+  	#{receiver},
+  	#{content},
+  	SYSDATE
+  	)
+  </insert>
+  
+  
+  
+  
+  </mapper>

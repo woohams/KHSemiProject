@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chat">
+
+	<select id="selectlist" resultType="ChatDto">
+		SELECT CHAT_NO, USER1, USER2, CONTENT, CAR_BOARD_NO, RENT_BOARD_NO, REGDATE
+		FROM CHAT_BOARD
+		ORDER BY CHAT_NO DESC
+	</select>
+	<select id="selectnickname" parameterType="String" resultType="ChatDto">
+		SELECT CHAT_NO, USER1, USER2, CONTENT, CAR_BOARD_NO, RENT_BOARD_NO, REGDATE
+		FROM CHAT_BOARD
+		WHERE USER1 = #{nickname} OR USER2 = #{nickname}
+		ORDER BY CHAT_NO DESC
+	</select>
+	
+	<select id="selectone" parameterType="int" resultType="ChatDto">
+		SELECT CHAT_NO, USER1, USER2, CONTENT, CAR_BOARD_NO, RENT_BOARD_NO, REGDATE
+		FROM CHAT_BOARD
+		WHERE CHAT_NO = #{chat_no}
+	</select>
+	
+	<insert id="insert" parameterType="ChatDto">
+		INSERT INTO CHAT_BOARD VALUES(
+		CHAT_BOARD_SEQ.NEXTVAL,
+		#{user1},
+		#{user2},
+		#{content},
+		<choose>
+			<when test="car_board_no > 0">
+				#{car_board_no},
+			</when>
+			<otherwise>
+				null,
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="rent_board_no > 0">
+				#{rent_board_no},
+			</when>
+			<otherwise>
+				null,
+			</otherwise>
+		</choose>
+		SYSDATE
+		)
+	</insert>
+	
+	<update id="update" parameterType="ChatDto">
+		UPDATE CHAT_BOARD SET 
+		USER1 = #{user1},
+		USER2 = #{user2},
+		CONTENT = #{content},
+		CAR_BOARD_NO = #{car_board_no, jdbcType=INTEGER},
+		RENT_BOARD_NO = #{rent_board_no, jdbcType=INTEGER},
+		REGDATE = SYSDATE
+		WHERE CHAT_NO = #{chat_no}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM CHAT_BOARD WHERE CHAT_NO = #{chat_no}
+	</delete>
+
+</mapper>

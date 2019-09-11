@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="caracc">
+
+	<select id="selectlist" resultType="CarAccDto">
+		SELECT CARACC_NO, CAR_BOARD_NO, CARACC_PROCESS, CARACC_XPOINT, CARACC_YPOINT, CARACC_COMENT, CARACC_NICKNAME, CARACC_ACC
+		FROM CARPOOL_ACC
+		ORDER BY CARACC_NO DESC
+	</select>
+	
+	<select id="myacclist" parameterType="String" resultType="CarAccDto">
+		SELECT CARACC_NO, CAR_BOARD_NO, CARACC_PROCESS, CARACC_XPOINT, CARACC_YPOINT, CARACC_COMENT, CARACC_NICKNAME, CARACC_ACC
+		FROM CARPOOL_ACC
+		WHERE CAR_BOARD_NO IN (SELECT CAR_BOARD_NO FROM CARPOOL_BOARD WHERE CAR_BOARD_WRITER = #{writer})
+		ORDER BY CARACC_NO DESC
+		
+	</select>
+	
+	<select id="select_writer" resultType="CarAccDto">
+		SELECT CARACC_NO, CAR_BOARD_NO, CARACC_PROCESS, CARACC_XPOINT, CARACC_YPOINT, CARACC_COMENT, CARACC_NICKNAME, CARACC_ACC
+		FROM CARPOOL_ACC
+		WHERE CARACC_NICKNAME = #{writer}
+		ORDER BY CARACC_NO DESC
+		
+	</select>
+	
+	
+	<select id="selectone" resultType="CarAccDto">
+		SELECT CARACC_NO, CAR_BOARD_NO, CARACC_PROCESS, CARACC_XPOINT, CARACC_YPOINT, CARACC_COMENT, CARACC_NICKNAME, CARACC_ACC
+		FROM CARPOOL_ACC
+		WHERE CARACC_NO = #{caracc_no}
+	</select>
+	
+	<insert id="insert" parameterType="CarAccDto">
+		INSERT INTO CARPOOL_ACC
+		VALUES(CARPOOL_ACC_SEQ.NEXTVAL, #{car_board_no}, '대기', #{caracc_xpoint}, #{caracc_ypoint}, #{caracc_coment, jdbcType=VARCHAR}, #{caracc_nickname}, 'N')
+	</insert>
+	
+	<update id="update" parameterType="CarAccDto">
+		UPDATE CARPOOL_ACC
+		SET	CARACC_PROCESS = #{caracc_process}, CARACC_XPOINT = #{caracc_xpoint}, CARACC_YPOINT = #{caracc_ypoint}, CARACC_COMENT = #{caracc_coment, jdbcType=VARCHAR}, CARACC_NICKNAME = #{caracc_nickname}, CARACC_ACC = #{caracc_acc}
+		WHERE CARACC_NO = #{caracc_no}
+	</update>
+	<update id="updateacc" parameterType="CarAccDto">
+		UPDATE CARPOOL_ACC SET
+		CARACC_ACC = #{caracc_acc},
+		CARACC_PROCESS = #{caracc_process}
+		WHERE CARACC_NO = #{caracc_no}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM CARPOOL_ACC
+		WHERE CARACC_NO = #{caracc_no}
+	</delete>
+
+</mapper>

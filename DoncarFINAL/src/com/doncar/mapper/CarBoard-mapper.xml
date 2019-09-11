@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="carboard">
+	
+	<select id="selectlist" resultType="CarBoardDto">
+		SELECT 
+		CAR_BOARD_NO,
+		CAR_BOARD_PROCESS, 
+		CAR_BOARD_TITLE, 
+		CAR_BOARD_WRITER, 
+		CAR_BOARD_PRICE, 
+		CAR_BOARD_STARTDATE,
+		CAR_BOARD_STARTPOINT, 
+		CAR_BOARD_ENDPOINT,
+		CAR_BOARD_X_POINT,
+		CAR_BOARD_Y_POINT, 
+		CAR_BOARD_REGDATE, 
+		CAR_BOARD_DELFLAG, 
+		CAR_BOARD_CONTENT
+		FROM CARPOOL_BOARD
+		<where>
+			<if test="car_board_title != null and car_board_title != ''">
+				CAR_BOARD_TITLE LIKE '%'||#{car_board_title}||'%' AND
+			</if>
+			<if test="car_board_writer != null and car_board_writer != ''">
+				CAR_BOARD_WRITER LIKE '%'||#{car_board_writer}||'%' AND
+			</if>
+			<if test="car_board_content != null and car_board_content !=''">
+				CAR_BOARD_CONTENT LIKE '%'||#{car_board_content}||'%' AND	
+			</if>
+			<if test="car_board_startdate != null and car_board_startdate !=''">
+				CAR_BOARD_STARTDATE = #{car_board_startdate} AND
+			</if>
+			<if test="car_board_startpoint != null and car_board_startpoint !=''">
+				CAR_BOARD_STARTPOINT = #{car_board_startpoint} AND
+			</if>
+			<if test="car_board_endpoint != null and car_board_endpoint !=''">
+				CAR_BOARD_ENDPOINT = #{car_board_endpoint} AND
+			</if>
+			CAR_BOARD_DELFLAG = 'N' 
+		</where>
+		ORDER BY CAR_BOARD_NO DESC
+	</select>
+	
+	<select id="myboard" parameterType="String" resultType="CarBoardDto">
+		SELECT 
+		CAR_BOARD_NO,
+		CAR_BOARD_PROCESS, 
+		CAR_BOARD_TITLE, 
+		CAR_BOARD_WRITER, 
+		CAR_BOARD_PRICE, 
+		CAR_BOARD_STARTDATE,
+		CAR_BOARD_STARTPOINT, 
+		CAR_BOARD_ENDPOINT,
+		CAR_BOARD_X_POINT,
+		CAR_BOARD_Y_POINT, 
+		CAR_BOARD_REGDATE, 
+		CAR_BOARD_DELFLAG, 
+		CAR_BOARD_CONTENT
+		FROM CARPOOL_BOARD
+		WHERE CAR_BOARD_WRITER = #{writer} AND CAR_BOARD_DELFLAG = 'N'
+		ORDER BY CAR_BOARD_NO DESC
+	</select>
+	
+	<select id="selectone" resultType="CarBoardDto">
+		SELECT 
+		CAR_BOARD_NO,
+		CAR_BOARD_PROCESS, 
+		CAR_BOARD_TITLE, 
+		CAR_BOARD_WRITER, 
+		CAR_BOARD_PRICE, 
+		CAR_BOARD_STARTDATE,
+		CAR_BOARD_STARTPOINT, 
+		CAR_BOARD_ENDPOINT,
+		CAR_BOARD_X_POINT,
+		CAR_BOARD_Y_POINT, 
+		CAR_BOARD_REGDATE, 
+		CAR_BOARD_DELFLAG, 
+		CAR_BOARD_CONTENT
+		FROM CARPOOL_BOARD
+		WHERE CAR_BOARD_NO = #{car_board_no}
+	</select>
+	
+	<insert id="insert" parameterType="CarBoardDto">
+		INSERT INTO CARPOOL_BOARD
+		VALUES(
+		CARPOOL_BOARD_SEQ.NEXTVAL, 
+		'대기', 
+		#{car_board_title}, 
+		#{car_board_writer}, 
+		#{car_board_content}, 
+		#{car_board_price}, 
+		#{car_board_startdate},
+		#{car_board_startpoint},
+		#{car_board_endpoint}, 
+		#{car_board_x_point}, 
+		#{car_board_y_point}, 
+		SYSDATE, 
+		'N')
+	</insert>
+	
+	<update id="update" parameterType="CarBoardDto">
+		UPDATE CARPOOL_BOARD
+		SET CAR_BOARD_TITLE = #{car_board_title},
+		CAR_BOARD_WRITER = #{car_board_writer},
+		CAR_BOARD_PRICE = #{car_board_price},
+		CAR_BOARD_STARTDATE = #{car_board_startdate},
+		CAR_BOARD_STARTPOINT = #{car_board_startpoint},
+		CAR_BOARD_ENDPOINT = #{car_board_endpoint},
+		CAR_BOARD_X_POINT = #{car_board_x_point},
+		CAR_BOARD_Y_POINT = #{car_board_y_point},
+		CAR_BOARD_CONTENT = #{car_board_content}
+		WHERE CAR_BOARD_NO = #{car_board_no}
+	</update>
+	
+	<update id="delete" parameterType="int">
+		UPDATE CARPOOL_BOARD
+		SET CAR_BOARD_DELFLAG = 'Y'
+		WHERE CAR_BOARD_NO = #{car_board_no}
+	</update>
+	
+	
+</mapper>

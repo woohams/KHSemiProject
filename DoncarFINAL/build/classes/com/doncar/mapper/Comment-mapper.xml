@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+
+	<select id="selectlist" resultType="CommentDto">
+		SELECT  
+			COMMENT_NO,
+		 	COMMENT_GROUP_NO, 
+		 	COMMENT_GROUP_SQ, 
+		 	COMMENT_TITLETAB,
+		 	COMMENT_NICKNAME,
+		 	COMMENT_CONTENT,
+		 	RENT_BOARD_NO,
+		 	FREE_BOARD_NO,
+		 	CAR_BOARD_NO,
+		 	COMMENT_REGDATE
+		FROM DONCAR_COMMENT
+		<where>
+			<if test="free_board_no != 0">
+				FREE_BOARD_NO = #{free_board_no}
+			</if>
+			<if test="rent_board_no != 0">
+				RENT_BOARD_NO = #{rent_board_no}
+			</if>
+			<if test="car_board_no != 0">
+				CAR_BOARD_NO = #{car_board_no}
+			</if>
+		</where>
+		ORDER BY COMMENT_GROUP_NO DESC, COMMENT_GROUP_SQ
+	</select>
+	
+	<select id="selectone" parameterType="int" resultType="CommentDto">
+		SELECT  
+			COMMENT_NO,
+		 	COMMENT_GROUP_NO, 
+		 	COMMENT_GROUP_SQ, 
+		 	COMMENT_TITLETAB,
+		 	COMMENT_NICKNAME,
+		 	COMMENT_CONTENT,
+		 	RENT_BOARD_NO,
+		 	FREE_BOARD_NO,
+		 	CAR_BOARD_NO,
+		 	COMMENT_REGDATE
+		FROM DONCAR_COMMENT
+		WHERE COMMENT_NO = #{comment_no}
+	</select>
+	
+	<select id="lastnum" resultType="CommentDto">
+		SELECT 
+			COMMENT_NO,
+		 	COMMENT_GROUP_NO, 
+		 	COMMENT_GROUP_SQ, 
+		 	COMMENT_TITLETAB,
+		 	COMMENT_NICKNAME,
+		 	COMMENT_CONTENT,
+		 	RENT_BOARD_NO,
+		 	FREE_BOARD_NO,
+		 	CAR_BOARD_NO,
+		 	COMMENT_REGDATE
+		FROM DONCAR_COMMENT
+		WHERE COMMENT_NO = (SELECT MAX(COMMENT_NO) FROM DONCAR_COMMENT)
+	</select>
+	
+	<select id="grouplist" parameterType="int" resultType="CommentDto">
+		SELECT  
+			COMMENT_NO,
+		 	COMMENT_GROUP_NO, 
+		 	COMMENT_GROUP_SQ, 
+		 	COMMENT_TITLETAB,
+		 	COMMENT_NICKNAME,
+		 	COMMENT_CONTENT,
+		 	RENT_BOARD_NO,
+		 	FREE_BOARD_NO,
+		 	CAR_BOARD_NO,
+		 	COMMENT_REGDATE
+		FROM DONCAR_COMMENT
+		WHERE COMMENT_GROUP_NO = (SELECT COMMENT_GROUP_NO FROM DONCAR_COMMENT WHERE COMMENT_NO=#{comment_no})
+		ORDER BY COMMENT_GROUP_NO DESC, COMMENT_GROUP_SQ
+	</select>
+	
+	<insert id="insert" parameterType="CommentDto">
+		INSERT INTO DONCAR_COMMENT
+		VALUES(
+			COMMENT_NO_SEQ.NEXTVAL,
+			COMMENT_GROUP_NO_SEQ.NEXTVAL,
+			1,
+			0,
+			#{comment_nickname},
+			#{comment_content},
+			<choose>
+				 <when test="rent_board_no > 0">
+				 ${rent_board_no},
+				 </when>
+				<otherwise>
+				NULL,
+				</otherwise>
+			</choose>
+			<choose>
+				 <when test="free_board_no > 0">
+				 ${free_board_no},
+				 </when>
+				<otherwise>
+				NULL,
+				</otherwise>
+			</choose>
+			<choose>
+				 <when test="car_board_no > 0">
+				 ${car_board_no},
+				 </when>
+				<otherwise>
+				NULL,
+				</otherwise>
+			</choose>
+			SYSDATE
+		)
+	</insert>
+	
+	<insert id="insert_reple" parameterType="CommentDto">
+		INSERT INTO DONCAR_COMMENT
+		VALUES (COMMENT_NO_SEQ.NEXTVAL,
+		#{comment_group_no},
+		#{comment_group_sq}+1,
+		#{comment_titletab}+1,
+		#{comment_nickname},
+		#{comment_content},
+			<choose>
+				 <when test="rent_board_no > 0">
+				 ${rent_board_no},
+				 </when>
+				<otherwise>
+				NULL,
+				</otherwise>
+			</choose>
+			<choose>
+				 <when test="free_board_no > 0">
+				 ${free_board_no},
+				 </when>
+				<otherwise>
+				NULL,
+				</otherwise>
+			</choose>
+			<choose>
+				 <when test="car_board_no > 0">
+				 ${car_board_no},
+				 </when>
+				<otherwise>
+				NULL,
+				</otherwise>
+			</choose>
+			SYSDATE)
+	</insert>
+	
+	<update id="update_sq" parameterType="int">
+	UPDATE DONCAR_COMMENT 
+	SET COMMENT_GROUP_SQ = COMMENT_GROUP_SQ+1 
+	WHERE COMMENT_GROUP_NO = (SELECT COMMENT_GROUP_NO FROM DONCAR_COMMENT WHERE COMMENT_NO=#{comment_no}) 
+	AND COMMENT_GROUP_SQ > (SELECT COMMENT_GROUP_SQ FROM DONCAR_COMMENT WHERE COMMENT_NO=#{comment_no})
+	</update>
+	
+	<update id="update" parameterType="CommentDto">
+		UPDATE DONCAR_COMMENT SET 
+		COMMENT_CONTENT = #{comment_content},
+		COMMENT_REGDATE = SYSDATE
+		WHERE COMMENT_NO = #{comment_no}
+	</update>
+	
+	<update id="update_del_sq" parameterType="map">
+		UPDATE DONCAR_COMMNET SET
+		COMMENT_GROUP_SQ = COMMENT_GROUP_SQ - #{count}
+		WHERE COMMENT_GROUP_NO =  (SELECT COMMENT_GROUP_NO FROM DONCAR_COMMNET WHERE COMMENT_NO= #{comment_no})
+		AND COMMENT_GROUP_SQ > (SELECT COMMENT_GROUP_SQ FROM DONCAR_COMMNET WHERE COMMENT_NO=#{comment_no})
+	</update>
+
+</mapper>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<select id="login" parameterType="map" resultType="MemberDto">
+		SELECT 
+		MEMBER_NO, 
+		MEMBER_ID, 
+		MEMBER_PW, 
+		MEMBER_NAME, 
+		MEMBER_NICKNAME, 
+		MEMBER_GENDER, 
+		MEMBER_BIRTH, 
+		MEMBER_ADDR, 
+		MEMBER_MONEY,
+		MEMBER_EMAIL, 
+		MEMBER_PHONE, 
+		MEMBER_ROLL, 
+		MEMBER_DRIVEACC, 
+		MEMBER_DELFLAG, 
+		MEMBER_REGDATE
+		FROM DONCAR_MEMBER
+		WHERE MEMBER_ID = #{id} AND MEMBER_PW = #{pw} AND MEMBER_DELFLAG = 'N'	
+	</select>
+	
+	
+	<select id="idChk" resultType="String">
+		SELECT MEMBER_ID
+		FROM DONCAR_MEMBER
+		WHERE MEMBER_ID = #{id}
+	</select>
+	
+	<select id="nicknameChk" parameterType="String" resultType="String">
+		SELECT MEMBER_NICKNAME
+		FROM DONCAR_MEMBER
+		WHERE MEMBER_NICKNAME = #{nickname}
+	</select>
+	
+	<select id="findId" resultType="String">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_NICKNAME, MEMBER_GENDER, MEMBER_BIRTH, 
+		MEMBER_ADDR, MEMBER_MONEY,MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ROLL, MEMBER_DRIVEACC, MEMBER_DELFLAG, MEMBER_REGDATE
+		FROM DONCAR_MEMBER
+		WHERE MEMBER_NAME = #{member_name} AND MEMBER_PHONE = #{member_phone} AND MEMBER_BIRTH = #{member_birth}
+	</select>
+	
+	<select id="selectWrite" resultType="FreeBoardDto">
+		SELECT F.FREE_BOARD_NO, F.FREE_TITLE, F.FREE_WRITER, F.FREE_CONTENT, F.FREE_REGDATE, F.FREE_DELFLAG, M.MEMBER_NICKNAME
+		FROM FREE_BOARD F, DONCAR_MEMBER M
+		WHERE F.FREE_WRITER = M.MEMBER_NICKNAME
+		ORDER BY FREE_BOARD_NO DESC
+	</select>
+	
+	<select id="selectmail" parameterType="String" resultType="MemberDto">
+		SELECT
+		MEMBER_ID, 
+		MEMBER_PW,
+		MEMBER_NAME
+		FROM DONCAR_MEMBER
+		WHERE MEMBER_EMAIL = #{mail_addr}
+	</select>
+	
+	<update id="updatemail" parameterType="MemberDto">
+		UPDATE DONCAR_MEMBER 
+		SET	MEMBER_EMAIL = #{member_email}
+		WHERE MEMBER_NO = #{member_no}
+	</update>
+	
+	<update id="pwUpdate" parameterType="MemberDto">
+		UPDATE DONCAR_MEMBER SET MEMBER_PW = #{member_pw}
+		WHERE MEMBER_NO = #{member_no}
+	</update>
+	
+	<select id="selectList" resultType="MemberDto">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, MEMBER_NICKNAME, MEMBER_GENDER, MEMBER_BIRTH, MEMBER_ADDR, 
+		MEMBER_MONEY,MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ROLL, MEMBER_DRIVEACC, MEMBER_DELFLAG, MEMBER_REGDATE
+		FROM DONCAR_MEMBER
+		WHERE
+		<if test="member_id != null and member_id != ''">
+			MEMBER_ID  LIKE '%'||#{member_id}||'%' AND
+		</if>
+		<if test="member_nickname != null and member_nickname != ''">
+			MEMBER_NICKNAME  LIKE '%'||#{member_nickname}||'%' AND
+		</if>
+		<if test="member_name != null and member_name != ''">
+			MEMBER_NAME  LIKE '%'||#{member_name}||'%' AND
+		</if>
+		MEMBER_DELFLAG = 'N'
+		ORDER BY MEMBER_NO DESC
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="MemberDto">
+		SELECT
+		MEMBER_NO,
+		MEMBER_ID,
+		MEMBER_PW,
+		MEMBER_NAME,
+		MEMBER_NICKNAME,
+		MEMBER_GENDER,
+		MEMBER_ADDR,
+		MEMBER_MONEY,
+		MEMBER_BIRTH,
+		MEMBER_EMAIL,
+		MEMBER_PHONE,
+		MEMBER_ROLL,
+		MEMBER_DRIVEACC,
+		MEMBER_DELFLAG,
+		MEMBER_REGDATE
+		FROM DONCAR_MEMBER
+		WHERE MEMBER_NO = #{no} AND MEMBER_DELFLAG = 'N'
+	</select>
+	
+	<insert id="insert" parameterType="MemberDto"> 
+		INSERT INTO DONCAR_MEMBER (MEMBER_NO, MEMBER_ID, MEMBER_NICKNAME, MEMBER_NAME, MEMBER_PW, MEMBER_ROLL, MEMBER_DRIVEACC, MEMBER_DELFLAG, MEMBER_REGDATE) 
+		VALUES (MEMBER_NO.NEXTVAL, #{member_id}, #{member_nickname}, #{member_name}, #{member_pw}, 'USER','N', 'N', SYSDATE)	
+	</insert>
+	
+	<update id="update" parameterType="MemberDto"> 
+		UPDATE DONCAR_MEMBER SET 
+		<if test="member_gender != null and member_gender != ''">
+		MEMBER_GENDER = #{member_gender},
+		</if>
+		<if test="member_birth != null and member_birth !=''">
+		MEMBER_BIRTH = #{member_birth},
+		</if>
+		<if test="member_addr != null and member_addr !=''">
+		MEMBER_ADDR = #{member_addr},
+		</if>
+		<if test="member_email != null and member_email !=''">
+		MEMBER_EMAIL = #{member_email},
+		</if> 
+		MEMBER_DELFLAG = 'N'
+		WHERE MEMBER_NO = #{member_no}
+	</update>
+	
+	<update id="delete" parameterType="MemberDto">
+		UPDATE DONCAR_MEMBER SET MEMBER_DELFLAG = 'Y'
+		WHERE MEMBER_NO = #{no}
+	</update>
+	
+	<select id="snslogin" resultType="MemberDto">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_NICKNAME, MEMBER_GENDER, MEMBER_BIRTH, 
+		MEMBER_ADDR, MEMBER_MONEY,MEMBER_EMAIL, MEMBER_PHONE, MEMBER_ROLL, MEMBER_DRIVEACC, MEMBER_DELFLAG, MEMBER_REGDATE
+		FROM DONCAR_MEMBER
+		WHERE MEMBER_ID = #{member_id} AND MEMBER_PW = #{memeber_id}	
+		
+	</select>
+	
+</mapper>
+
+
+
